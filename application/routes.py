@@ -6,12 +6,12 @@ from flask import render_template
 @app.route('/index')
 @app.route('/home')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", index=True)
 
 
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    return render_template("login.html", login=True)
 
 
 @app.route('/courses')
@@ -53,9 +53,9 @@ def courses():
             "term": "Fall"
         }
     ]
-    return render_template("courses.html", courseData=courseData)
+    return render_template("courses.html", courses=True, courseData=courseData)
 
 
 @app.route('/register')
 def register():
-    return render_template("register.html")
+    return render_template("register.html", register=True)
