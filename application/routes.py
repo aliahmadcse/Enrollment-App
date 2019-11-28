@@ -15,8 +15,8 @@ def login():
 
 
 @app.route('/courses')
-@app.route('/course/<term>')
-def courses(term="2019"):
+@app.route('/courses/<term>')
+def courses(term="Fall 2019"):
     courseData = [
         {
             "courseID": "1111",
