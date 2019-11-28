@@ -1,5 +1,5 @@
 from application import app
-from flask import render_template
+from flask import render_template, request
 
 
 @app.route('/')
@@ -60,3 +60,13 @@ def courses(term="Fall 2019"):
 @app.route('/register')
 def register():
     return render_template("register.html", register=True)
+
+
+@app.route('/enrollment', methods=["GET", "POST"])
+def enrollment():
+    courseID = request.args.get("courseID")
+    title = request.args.get("title")
+    term = request.args.get("term")
+    data = {"id": courseID, "title": title, "term": term}
+
+    return render_template("enrollment.html", data=data)
