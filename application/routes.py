@@ -15,8 +15,8 @@ def login():
 
 
 @app.route('/courses')
-@app.route('course/<term>')
-def courses(term=2019):
+@app.route('/course/<term>')
+def courses(term="2019"):
     courseData = [
         {
             "courseID": "1111",
@@ -54,7 +54,7 @@ def courses(term=2019):
             "term": "Fall"
         }
     ]
-    return render_template("courses.html", courses=True, courseData=courseData, term)
+    return render_template("courses.html", courses=True, courseData=courseData, term=term)
 
 
 @app.route('/register')
