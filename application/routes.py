@@ -1,5 +1,5 @@
 from application import app
-from flask import render_template, request,json,Response
+from flask import render_template, request, json, Response
 
 
 courseData = [
@@ -54,6 +54,7 @@ def login():
 
 
 @app.route('/courses')
+#use of url vaariables
 @app.route('/courses/<term>')
 def courses(term="Fall 2019"):
     return render_template("courses.html", courses=True, courseData=courseData, term=term)

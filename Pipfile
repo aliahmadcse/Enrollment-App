@@ -1,16 +1,27 @@
-[[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
-
-[dev-packages]
-pylint = "*"
-autopep8 = "*"
-
-[packages]
-requests = "*"
-flask = "*"
-flask-wtf = "*"
-
-[requires]
-python_version = "3.8"
+astroid==2.3.3
+autopep8==1.4.4
+certifi==2019.11.28
+chardet==3.0.4
+Click==7.0
+colorama==0.4.1
+Flask==1.1.1
+flask-mongoengine==0.9.5
+Flask-WTF==0.14.2
+idna==2.8
+isort==4.3.21
+itsdangerous==1.1.0
+Jinja2==2.10.3
+lazy-object-proxy==1.4.3
+MarkupSafe==1.1.1
+mccabe==0.6.1
+mongoengine==0.18.2
+pycodestyle==2.5.0
+pylint==2.4.4
+pymongo==3.9.0
+python-dotenv==0.10.3
+requests==2.22.0
+six==1.13.0
+urllib3==1.25.7
+Werkzeug==0.16.0
+wrapt==1.11.2
+WTForms==2.2.1
