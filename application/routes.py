@@ -53,6 +53,8 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        email=form.email.data
+        password=form.password.data
         if request.form.get('email') == "test@uta.com":
             flash("Logged in Successfully","success")
             return redirect("/index")
@@ -70,7 +72,8 @@ def courses(term="Fall 2019"):
 
 @app.route('/register')
 def register():
-    return render_template("register.html", register=True)
+    form=RegisterForm()
+    return render_template("register.html", register=True,title="Register",form=form)
 
 
 @app.route('/enrollment', methods=["GET", "POST"])
