@@ -11,6 +11,7 @@ flask-wtf = "*"
 python-dotenv = "*"
 flask-mongoengine = "*"
 flask-security = "*"
+flask-restplus = "*"
 
 [requires]
 python_version = "3.8"
