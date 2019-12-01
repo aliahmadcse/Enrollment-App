@@ -1,5 +1,5 @@
 from application import app, db
-from flask import render_template, request, json, Response, redirect, flash,session
+from flask import render_template, request, json, Response, redirect, flash, session
 from application.models import User, Enrollment, Course
 from application.forms import LoginForm, RegisterForm
 
@@ -15,6 +15,8 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if session.get("user_id"):
+        return redirect("/index")
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -23,12 +25,19 @@ def login():
         user = User.objects(email=email).first()
         if user and user.get_password(password):
             flash("Logged in Successfully", "success")
-            session["user_id"]=user.user_id
-            session["username"]=user.first_name
+            session["user_id"] = user.user_id
+            session["username"] = user.first_name
             return redirect("/index")
         else:
             flash("Something went wrong", "danger")
     return render_template("login.html", login=True, form=form, title="Login")
+
+
+@app.route("/logout")
+def logout():
+    session["user_id"] = False
+    session.pop("username", None)
+    return redirect("/index")
 
 
 @app.route('/courses')
@@ -44,6 +53,8 @@ def courses(term=None):
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
+    if session.get("user_id"):
+        return redirect("/index")
     form = RegisterForm()
     if form.validate_on_submit():
         user_id = User.objects.count()
@@ -66,9 +77,11 @@ def register():
 
 @app.route('/enrollment', methods=["GET", "POST"])
 def enrollment():
+    if not session.get("user_id"):
+        return redirect("/login")
     courseID = request.form.get("courseID")
     courseTitle = request.form.get("title")
-    user_id = 1
+    user_id = session.get("user_id")
     if courseID:
         if Enrollment.objects(user_id=user_id, courseID=courseID):
             flash(
