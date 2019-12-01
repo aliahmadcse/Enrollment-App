@@ -53,13 +53,15 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        email=form.email.data
-        password=form.password.data
-        if request.form.get('email') == "test@uta.com":
-            flash("Logged in Successfully","success")
+        email = form.email.data
+        # or you can use request.form.get(email)
+        password = form.password.data
+        user = User.objects(email=email).first()
+        if user and user.get_password(password):
+            flash("Logged in Successfully", "success")
             return redirect("/index")
         else:
-            flash("Something went wrong","danger")
+            flash("Something went wrong", "danger")
     return render_template("login.html", login=True, form=form, title="Login")
 
 
@@ -70,10 +72,25 @@ def courses(term="Fall 2019"):
     return render_template("courses.html", courses=True, courseData=courseData, term=term)
 
 
-@app.route('/register')
+@app.route('/register', methods=["POST", "GET"])
 def register():
-    form=RegisterForm()
-    return render_template("register.html", register=True,title="Register",form=form)
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user_id = User.objects.count()
+        user_id += 1
+        print(user_id)
+        email = form.email.data
+        password = form.password.data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        #updating the database
+        user = User(user_id=user_id, email=email,first_name=first_name, last_name=last_name,)
+        user.set_password(password)
+        user.save()
+        flash("You are successfully registered","success")
+        return redirect('/index')
+
+    return render_template("register.html", register=True, title="Register", form=form)
 
 
 @app.route('/enrollment', methods=["GET", "POST"])
